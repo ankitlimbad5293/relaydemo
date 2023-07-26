@@ -3,6 +3,7 @@ import { graphql } from "relay-runtime";
 import { useFragment } from "react-relay";
 import type { StoryCommentsSectionFragment$key } from "./__generated__/StoryCommentsSectionFragment.graphql";
 import Comment from "./Comment";
+import StoryCommentsComposer from "./StoryCommentsComposer";
 
 const { useState, useTransition } = React;
 
@@ -12,10 +13,12 @@ export type Props = {
 
 const StoryCommentsSectionFragment = graphql`
   fragment StoryCommentsSectionFragment on Story {
-    comments(first: 1) {
+    comments(after: $cursor, first: $count)
+      @connection(key: "StoryCommentsSectionFragment_comments") {
       pageInfo {
         startCursor
       }
+      ...StoryCommentsComposerFragment
       edges {
         node {
           id
@@ -30,6 +33,7 @@ export default function StoryCommentsSection({ story }: Props) {
   const data = useFragment(StoryCommentsSectionFragment, story);
   return (
     <div>
+      <StoryCommentsComposer story={data} />
       {data.comments.edges.map((edge) => (
         <Comment key={edge.node.id} comment={edge.node} />
       ))}
