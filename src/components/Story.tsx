@@ -8,12 +8,15 @@ import Timestamp from "./Timestamp";
 import { graphql } from "relay-runtime";
 import { useFragment } from "react-relay";
 import { StoryFragment$key } from "./__generated__/StoryFragment.graphql";
+import StoryCommentsSection from "./StoryCommentsSection";
+import StoryLikeButton from "./StoryLikeButton";
 
 const StoryFragment = graphql`
   fragment StoryFragment on Story {
     title
     summary
     createdAt
+    ...StoryLikeButtonFragment
     poster {
       ...PosterBylineFragment
     }
@@ -37,6 +40,8 @@ export default function Story({ story }: Props): React.ReactElement {
       <Timestamp time={data.createdAt} />
       <Image image={data.thumbnail} width={400} height={400} />
       <StorySummary summary={data.summary} />
+      <StoryLikeButton story={data} />
+      {/* <StoryCommentsSection story={data} /> */}
     </Card>
   );
 }

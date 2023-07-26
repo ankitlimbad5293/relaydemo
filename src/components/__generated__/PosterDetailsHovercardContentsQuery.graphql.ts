@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<42003b0ddb424dee5500be014fb4eafb>>
+ * @generated SignedSource<<442e5cc6331690f5fe613d2c11bb9f54>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,9 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PosterDetailsHovercardContentsQuery$variables = {};
+export type PosterDetailsHovercardContentsQuery$variables = {
+  posterId: string;
+};
 export type PosterDetailsHovercardContentsQuery$data = {
   readonly node: {
     readonly " $fragmentSpreads": FragmentRefs<"PosterDetailsHovercardContentsBodyFragment">;
@@ -24,21 +26,42 @@ export type PosterDetailsHovercardContentsQuery = {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "kind": "Literal",
-    "name": "id",
-    "value": "7"
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "posterId"
   }
-];
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "posterId"
+  }
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+};
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "PosterDetailsHovercardContentsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": null,
         "kind": "LinkedField",
         "name": "node",
@@ -57,7 +80,7 @@ return {
             "abstractKey": "__isActor"
           }
         ],
-        "storageKey": "node(id:\"7\")"
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -65,13 +88,13 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "PosterDetailsHovercardContentsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": null,
         "kind": "LinkedField",
         "name": "node",
@@ -84,23 +107,11 @@ return {
             "name": "__typename",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          },
+          (v2/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "name",
-                "storageKey": null
-              },
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -132,27 +143,61 @@ return {
                   }
                 ],
                 "storageKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "organizationKind",
+                    "storageKey": null
+                  }
+                ],
+                "type": "Organization",
+                "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Location",
+                    "kind": "LinkedField",
+                    "name": "location",
+                    "plural": false,
+                    "selections": [
+                      (v3/*: any*/),
+                      (v2/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "type": "Person",
+                "abstractKey": null
               }
             ],
             "type": "Actor",
             "abstractKey": "__isActor"
           }
         ],
-        "storageKey": "node(id:\"7\")"
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "60ecc2a435b5250ebfa3429259bd9555",
+    "cacheID": "bfe2163fed489260a900974f0a19da42",
     "id": null,
     "metadata": {},
     "name": "PosterDetailsHovercardContentsQuery",
     "operationKind": "query",
-    "text": "query PosterDetailsHovercardContentsQuery {\n  node(id: \"7\") {\n    __typename\n    ... on Actor {\n      __isActor: __typename\n      ...PosterDetailsHovercardContentsBodyFragment\n    }\n    id\n  }\n}\n\nfragment ImageFragment on Image {\n  url\n  altText\n}\n\nfragment PosterDetailsHovercardContentsBodyFragment on Actor {\n  __isActor: __typename\n  id\n  name\n  joined\n  profilePicture {\n    ...ImageFragment\n  }\n}\n"
+    "text": "query PosterDetailsHovercardContentsQuery(\n  $posterId: ID!\n) {\n  node(id: $posterId) {\n    __typename\n    ... on Actor {\n      __isActor: __typename\n      ...PosterDetailsHovercardContentsBodyFragment\n    }\n    id\n  }\n}\n\nfragment ImageFragment on Image {\n  url\n  altText\n}\n\nfragment PosterDetailsHovercardContentsBodyFragment on Actor {\n  __isActor: __typename\n  id\n  name\n  joined\n  ... on Organization {\n    organizationKind\n  }\n  ... on Person {\n    location {\n      name\n      id\n    }\n  }\n  profilePicture {\n    ...ImageFragment\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b364cc37fc258ebda3e5848d42edf9e6";
+(node as any).hash = "adee05eada67a2bf908bcbf606d15664";
 
 export default node;
